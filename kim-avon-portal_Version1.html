@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIM'S AVON CORNER | Agent Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #2d3748;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(214, 51, 132, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(214, 51, 132, 0.8); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============ HEADER & NAVIGATION ============ */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      animation: slideInLeft 0.6s ease-out;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .logo i { font-size: 2rem; }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      display: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+    }
+
+    /* ============ CONTAINER & SECTIONS ============ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    /* ============ LOGIN SECTION ============ */
+    .login-wrap {
+      max-width: 500px;
+      margin: 3rem auto;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .login-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-image {
+      background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-image::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .login-image::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -30%;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    .login-image-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .login-image-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .login-image h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .login-image p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .login-form {
+      padding: 3rem 2rem;
+    }
+
+    .login-form h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      color: #d63384;
+      font-weight: 700;
+    }
+
+    .login-form > p {
+      color: #718096;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #4a5568;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Segoe UI', sans-serif;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #d63384;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.1);
+    }
+
+    input::placeholder {
+      color: #cbd5e0;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .login-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(214, 51, 132, 0.5);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+
+    .login-btn.loading {
+      color: transparent;
+    }
+
+    .login-btn.loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .error {
+      color: #e53e3e;
+      font-size: 0.85rem;
+      margin-top: -1rem;
+      margin-bottom: 1rem;
+      display: none;
+      animation: slideInLeft 0.3s ease-out;
+      padding: 0.75rem 1rem;
+      background: #fff5f5;
+      border-left: 3px solid #e53e3e;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .error i { font-size: 1rem; }
+
+    @media (max-width: 768px) {
+      .login-container {
+        grid-template-columns: 1fr;
+      }
+
+      .login-image {
+        display: none;
+      }
+
+      .login-form {
+        padding: 2rem;
+      }
+    }
+
+    /* ============ DASHBOARD SECTION ============ */
+    .dashboard {
+      display: none;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* ============ WELCOME CARD ============ */
+    .welcome-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 2rem;
+      color: white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .welcome-card::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .welcome-text h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+      animation: slideInLeft 0.8s ease-out 0.2s backwards;
+    }
+
+    .welcome-text p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      animation: slideInLeft 0.8s ease-out 0.4s backwards;
+    }
+
+    .agent-info {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      animation: slideInRight 0.8s ease-out 0.3s backwards;
+    }
+
+    .info-box-label {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+
+    .info-box-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .welcome-emoji {
+      font-size: 5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* ============ CARD STYLES ============ */
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #2d3748;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .card h2 i {
+      color: #d63384;
+      font-size: 1.8rem;
+    }
+
+    /* ============ OBJECTIVES ============ */
+    .objectives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .objective-card {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 15px;
+      padding: 1.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .objective-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .objective-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(245, 87, 108, 0.3);
+    }
+
+    .objective-card:hover::before {
+      top: -20%;
+      right: -20%;
+    }
+
+    .objective-card:nth-child(2) {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .objective-card:nth-child(3) {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .objective-card:nth-child(4) {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .objective-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .objective-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .objective-desc {
+      font-size: 0.9rem;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+    }
+
+    /* ============ PRODUCTS ============ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transition: all 0.5s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card:hover::before {
+      top: 20%;
+      right: 20%;
+    }
+
+    .product-card:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .product-card:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+    .product-card:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+    .product-card:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #2d3748; }
+    .product-card:nth-child(5) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; }
+    .product-card:nth-child(6) { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; }
+
+    .product-image {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-name {
+      font-weight: 700;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
+    }
+
+    /* ============ STATS ============ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+      .welcome-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .welcome-emoji {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .welcome-text h1 {
+        font-size: 1.8rem;
+      }
+
+      .agent-info {
+        gap: 1rem;
+        flex-direction: column;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      header {
+        padding: 1rem;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-heart"></i>
+      KIM'S AVON
+    </div>
+    <button class="logout-btn" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
+  </header>
+
+  <div class="container">
+    <!-- ============ LOGIN SECTION ============ -->
+    <div class="login-wrap" id="loginSection">
+      <div class="login-container">
+        <div class="login-image">
+          <div class="login-image-content">
+            <div class="login-image-icon"><i class="fas fa-sparkles"></i></div>
+            <h2>Welcome Back!</h2>
+            <p>Join thousands of successful Avon agents building their dreams</p>
+          </div>
+        </div>
+        <div class="login-form">
+          <h1><i class="fas fa-sign-in-alt"></i> Agent Login</h1>
+          <p>Access your exclusive agent portal</p>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+              <input type="email" id="email" placeholder="kim@example.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="password"><i class="fas fa-lock"></i> Password</label>
+              <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="error" id="errorMsg">
+              <i class="fas fa-exclamation-circle"></i>
+              <span id="errorText"></span>
+            </div>
+            
+            <button type="submit" class="login-btn" id="loginBtn">
+              <i class="fas fa-arrow-right"></i> Log In Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ DASHBOARD SECTION ============ -->
+    <div class="dashboard" id="dashboardSection">
+      <!-- Welcome Card -->
+      <div class="welcome-card">
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <h1>✨ Welcome, <span id="agentName">Kim</span>!</h1>
+            <p>Ready to make magic happen today? 💎</p>
+            <div class="agent-info">
+              <div class="info-box">
+                <div class="info-box-label">Logged In As</div>
+                <div class="info-box-value" id="userEmail">kim@example.com</div>
+              </div>
+              <div class="info-box">
+                <div class="info-box-label">Agent Number</div>
+                <div class="info-box-value" id="agentNumber">AV-2024001</div>
+              </div>
+              <div class="info-box">
+                <div class="info-box-label">Status</div>
+                <div class="info-box-value">🌟 Active</div>
+              </div>
+            </div>
+          </div>
+          <div class="welcome-emoji">👑</div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value">$5,000</div>
+          <div class="stat-label">Monthly Target</div>
+        </div>
+        <div class="stat-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Recruits Needed</div>
+        </div>
+        <div class="stat-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <div class="stat-value">14</div>
+          <div class="stat-label">Days to Complete Training</div>
+        </div>
+        <div class="stat-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+          <div class="stat-value">Weekly</div>
+          <div class="stat-label">Client Contact Frequency</div>
+        </div>
+      </div>
+
+      <!-- Objectives -->
+      <div class="card">
+        <h2><i class="fas fa-bullseye"></i> Your Objectives</h2>
+        <div class="objectives-grid">
+          <div class="objective-card">
+            <div class="objective-icon">👥</div>
+            <div class="objective-title">Client Engagement</div>
+            <div class="objective-desc">Maintain weekly contact with assigned clients and log all interactions.</div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">📈</div>
+            <div class="objective-title">Sales Target</div>
+            <div class="objective-desc">Achieve monthly sales goal of $5,000 in personal product volume.</div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">🤝</div>
+            <div class="objective-title">Team Growth</div>
+            <div class="objective-desc">Recruit and mentor 2 new active representatives per quarter.</div>
+          </div>
+          <div class="objective-card">
+            <div class="objective-icon">🎓</div>
+            <div class="objective-title">Product Knowledge</div>
+            <div class="objective-desc">Complete all new product training modules within 14 days of release.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="card">
+        <h2><i class="fas fa-shopping-bag"></i> Your Amazing Products</h2>
+        <div class="products-grid">
+          <div class="product-card">
+            <div class="product-image">💜</div>
+            <div class="product-name">Anew Clinical Skincare</div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">🌹</div>
+            <div class="product-name">Far Away Perfume</div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">💄</div>
+            <div class="product-name">True Color Makeup</div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">✨</div>
+            <div class="product-name">Skin So Soft Body</div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">💅</div>
+            <div class="product-name">Moisture Therapy</div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">⭐</div>
+            <div class="product-name">Mark. Beauty Line</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const userEmail = document.getElementById('userEmail');
+    const errorMsg = document.getElementById('errorMsg');
+    const errorText = document.getElementById('errorText');
+    const agentNumber = document.getElementById('agentNumber');
+    const agentName = document.getElementById('agentName');
+
+    // Check if user is already logged in
+    window.addEventListener('load', () => {
+      const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+      if (isLoggedIn) {
+        showDashboard(sessionStorage.getItem('userEmail'));
+      }
+    });
+
+    function showDashboard(email) {
+      loginSection.style.display = 'none';
+      dashboardSection.style.display = 'block';
+      logoutBtn.style.display = 'flex';
+      userEmail.textContent = email;
+      
+      // Extract name from email for personalization
+      const name = email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1);
+      agentName.textContent = name;
+      
+      // Generate random agent number
+      agentNumber.textContent = 'AV-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    }
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      
+      // Validation
+      if (!email.includes('@') || email.length < 5) {
+        showError('Please enter a valid email address');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showError('Password must be at least 6 characters long');
+        return;
+      }
+
+      // Show loading state
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+      errorMsg.style.display = 'none';
+      
+      // Simulate API call
+      setTimeout(() => {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('userEmail', email);
+        showDashboard(email);
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+      }, 1000);
+    });
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorMsg.style.display = 'flex';
+    }
+
+    logoutBtn.addEventListener('click', function() {
+      sessionStorage.clear();
+      loginSection.style.display = 'block';
+      dashboardSection.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      loginForm.reset();
+      errorMsg.style.display = 'none';
+    });
+
+    // Add some interactivity to cards
+    const objectiveCards = document.querySelectorAll('.objective-card');
+    const productCards = document.querySelectorAll('.product-card');
+
+    objectiveCards.forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 100);
+      });
+    });
+
+    productCards.forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.animation = 'pulse 0.6s ease-out';
+        setTimeout(() => {
+          this.style.animation = '';
+        }, 600);
+      });
+    });
+  </script>
+</body>
+</html>
