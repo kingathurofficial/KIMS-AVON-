@@ -1,0 +1,20 @@
+{
+  "name": "kims-avon-portal",
+  "version": "1.0.0",
+  "description": "Kim's Avon Corner - Agent Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "avon",
+    "portal",
+    "agent"
+  ],
+  "author": "Kim's Avon Corner",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
